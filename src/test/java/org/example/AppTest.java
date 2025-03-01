@@ -13,7 +13,7 @@ public class AppTest
     /**
      *
      *
-     * @param testName name of the test cas
+     * @param testName name of the test ca
      */
     public AppTest( String testName )
     {
