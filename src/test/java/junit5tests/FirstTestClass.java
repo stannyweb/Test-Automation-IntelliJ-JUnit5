@@ -1,9 +1,32 @@
 package junit5tests;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
+
+@TestInstance(PER_CLASS)
 public class FirstTestClass {
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println("--This is the beforeAll method");
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        System.out.println("----This is the beforeEach method");
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println("--This is afterAll method");
+    }
+
+    @AfterEach
+    void afterEeach() {
+        System.out.println("----This is the afterEach method");
+    }
+
 
     @Test
     @DisplayName("US2 - TC2 - This is the first method")
