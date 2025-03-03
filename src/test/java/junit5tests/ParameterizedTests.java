@@ -1,11 +1,16 @@
 package junit5tests;
 
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+@TestInstance(PER_CLASS)
 public class ParameterizedTests {
 
     @ParameterizedTest(name = "Run: {index} - value: {arguments}")
@@ -61,4 +66,26 @@ public class ParameterizedTests {
     void csvFileSource_ShoppingListWithDelimiter(String name, double price, int quantity, String units, String provider) {
         System.out.println("name = " + name + ", price = " + price + ", quantity = " + quantity + ", units = " + units + ", provider = " + provider);
     }
+
+
+    @ParameterizedTest(name = "Vegetable: {0} - price: {1}")
+    @MethodSource(value = "methodSourceList")
+    void methodSource_List(String param1, double param2) {
+        System.out.println("param1 = " + param1 + ", param2 = " + param2);
+    }
+
+    List<Arguments> methodSourceList() {
+//        processing
+        return Arrays.asList(arguments("tomato", 5.4), arguments("carrot", 1.4));
+    }
+
+    @ParameterizedTest
+    @MethodSource(value = "junit5tests.ParamsProvider#methodSourceStream")
+    void methodSource_StreamString(String param1) {
+//        Използва се @MethodSource за да укаже, че входните данни идват от метод в класа ParamsProvider.
+//        "junit5tests.ParamsProvider#methodSourceStream" указва пълното име на метода, който предоставя данните.
+        System.out.println("param1 = " + param1);
+    }
+
+
 }
