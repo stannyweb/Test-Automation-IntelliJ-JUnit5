@@ -1,6 +1,7 @@
 package junit5tests;
 
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -46,5 +47,18 @@ public class ParameterizedTests {
     @CsvSource(value = {"steve?rogers", "bucky?barnes"}, delimiter = '?')
     void csvSource_StringWithDiffDelimiter(String param1, String param2) {
         System.out.println("param1 = " + param1 + ", param2 = " + param2);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = {"src/test/resources/params/shoppingList.csv",
+            "src/test/resources/params/shoppingList2.csv"}, numLinesToSkip = 1)
+    void csvFileSource_ShoppingList(String name, double price, int quantity, String units, String provider) {
+        System.out.println("name = " + name + ", price = " + price + ", quantity = " + quantity + ", units = " + units + ", provider = " + provider);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/params/shoppingList3.csv", numLinesToSkip = 1, delimiterString = "___")
+    void csvFileSource_ShoppingListWithDelimiter(String name, double price, int quantity, String units, String provider) {
+        System.out.println("name = " + name + ", price = " + price + ", quantity = " + quantity + ", units = " + units + ", provider = " + provider);
     }
 }
